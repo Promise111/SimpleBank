@@ -16,13 +16,13 @@ const {
   purchase,
 } = require("../controllers/bank/mart");
 
-router.post("/transfers", [authMiddleware], transfers);
+// router.post("/transfers", [authMiddleware], transfers);
 
-router.post("/deposits", [authMiddleware], deposit);
+// router.post("/deposits", [authMiddleware], deposit);
 
 router.post("/cards", [authMiddleware], card);
 
-router.post("/balance", [authMiddleware], balance);
+// router.post("/balance", [authMiddleware], balance);
 
 router.get("/shop", mart);
 
