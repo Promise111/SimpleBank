@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <h1 class="text-center"><%= name %></h1>
+    <% if (items) {%>
+    <div class="wrapper col-md-12 mt-5">
+        <% for (item of items) {%>
+            <article class="contain col-md-2">
+                <a class="contain-link" href="/shop/<%= item.slug %>">
+                <img class="img" src="<%= item.image %>" alt="">
+                <h5><%= item.name.substring(0,15) %>...</h5>
+                <!-- <h6>Number in stock: <%= item.quantity%></h6> -->
+                <h6><%= new Intl.NumberFormat("en-NG",{style:"currency", currency:"NGN"}).format(item.price)%></h6>
+                <!-- <a href="#"><button class="btn btn-primary">Add to cart</button></a> -->
+                </a>
+            </article>
+        <% } %>
+    </div>
+    <% } %>
+
+    <%if (!items) {%>
+        <h3>No items currently</h3>
+    <% } %>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

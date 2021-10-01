@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= item.name %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- <div class="col-md-12"><a class="float-end btn btn-default"  href="#">Cart <span class="badge bg-success"><%=numberInCart%></span></a></div> -->
+    <div class="container sec-contain col-md-12 row">
+        <% if (errorMessage) {%>
+        <div class="col-md-12 text-center text-danger"><%=errorMessage%></div>
+        <%}%>
+        <aside class="col-md-4">
+            <img class="itm_img" src="<%= item.image %>" alt="<%= item.name %>">
+        </aside>
+        <section class="col-md-8">
+            <section>
+                <p><%= item.name %></p>
+            </section>
+            <section class="price">
+                <p><%= new Intl.NumberFormat("en-NG",{currency:"NGN", style:"currency"}).format(item.price) %></p>
+            </section>
+            <section>
+                <p><%= item.description %></p>
+            </section>
+            <section class="price">
+                <% if (item.price > 0) {%>
+                    <p>Number in stock: <%= item.quantity %></p>
+                <%}%>
+                <% if (item.price < 1) {%>
+                    <p>Out of stock</p>
+                <%}%>
+            </section>
+            <form action="/payments" method="get">
+                <input type="hidden" name="product" value="<%=item._id%>">
+                <select name="quantity" class="form-select mb-2" aria-label="Default select quantity" required>
+                    <option value="" selected>choose...</option>
+                    <% for (let quantity = 1; quantity <= item.quantity; quantity++) {%>
+                    <option value="<%=quantity%>"><%=quantity%></option>
+                    <%}%>
+                  </select>
+                <button type="submit" class="btn btn-success cart-btn">Purchase</button>
+            </form>
+        </section>
+        </section>
+        <section>
+
+    </div>
+
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

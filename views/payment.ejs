@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <h1 class="text-center"><%= product.name %></h1>
+    <div class="col-md-12 row mt-5">
+    <section class=" col-md-4 d-flex justify-content-center">
+        <img class="itm_img" src="<%= product.image %>" alt="">
+    </section>
+    <section class="col-md-8">
+        <section class="">
+            <p><%= product.description %> %></p>
+        </section>
+        <section class="price">
+                <p>Price: <%= new Intl.NumberFormat("en-NG",{currency:"NGN", style:"currency"}).format(parseInt(product.price)*parseInt(quantity)) %></p>
+        </section>
+        <section class="price">
+            <p>Purchase Quantity: <%= quantity %></p>
+        </section>
+        <section class="">
+            <form action="/payments" method="POST" class="row">
+                <input type="hidden" name="product" value="<%=product._id%>" id="" required>
+                <input type="hidden" name="quantity" value="<%=parseInt(quantity)%>" id="" required>
+                <input type="hidden" name="priceperunit" value="<%=product.price%>" id="" required>
+                <input type="hidden" name="amount" value="<%=parseInt(product.price)*parseInt(quantity)%>" id="" required>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Card Name</label>
+                    <input type="text" name="cardname" class="form-control" id="inputEmail4" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Card Number</label>
+                    <input type="text" name="cardnumber" class="form-control" id="inputPassword4" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="inputCity" class="form-label">CVV</label>
+                    <input type="text" name="cvv" class="form-control" id="inputCity" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="inputState" class="form-label">Expiry Month</label>
+                    <select id="inputState" name="month" class="form-select" required>
+                      <option selected>Choose...</option>
+                      <% for (let i = 1; i <= 12; i++) {%>
+                      <option value="<%= i %>"><%= i %></option>
+                      <%}%>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="inputZip" class="form-label">Expiry Year</label>
+                    <select id="inputState" name="year" class="form-select" required>
+                      <option selected>Choose...</option>
+                      <% for (let i = new Date().getFullYear(); i <= new Date().getFullYear()+15; i++) {%>
+                      <option value="<%= i %>"><%= i %></option>
+                      <%}%>
+                    </select>
+                  </div>
+                  <div class="mt-3 d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary">Pay</button>
+                  </div>
+            </form>
+        </section>
+    </section>
+    </div>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
