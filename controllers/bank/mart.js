@@ -79,8 +79,7 @@ exports.otp = async (req, res) => {
 
     transport.sendMail({
       from: "'Simple Bank' <bank@simplebank.com>",
-      // to: `${owner.email}`,
-      to: `promiseihunna@gmail.com`,
+      to: `${owner.email}`,
       subject: "OTP Code",
       text: `Your OTP Code: ${otp}`,
     });
