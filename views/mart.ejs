@@ -15,7 +15,7 @@
         <% for (item of items) {%>
             <article class="contain col-md-2">
                 <a class="contain-link" href="/shop/<%= item.slug %>">
-                <img class="img" src="<%= item.image %>" alt="">
+                <img class="img" src="<%= item.image %>" alt="<%= item.name%>">
                 <h5><%= item.name.substring(0,15) %>...</h5>
                 <!-- <h6>Number in stock: <%= item.quantity%></h6> -->
                 <h6><%= new Intl.NumberFormat("en-NG",{style:"currency", currency:"NGN"}).format(item.price)%></h6>
