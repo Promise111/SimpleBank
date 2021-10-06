@@ -18,8 +18,9 @@ module.exports = async (req, res) => {
     .findOne({ email: user.email })
     .select("-password");
 
-  if (error)
-    return res.status(400).json({ success: false, message: error.message });
+  if (error) {
+    return res.status(400).json({ success: false, message: error.details[0].message });
+  }
   const receiver = await userModel
     .findOne({
       accountnumber: body.account_number,
