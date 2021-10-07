@@ -21,6 +21,11 @@ module.exports = async (req, res) => {
   if (error) {
     return res.status(400).json({ success: false, message: error.details[0].message });
   }
+
+  if (typeof body.amount != number) {
+    return res.status(400).json({success: false, message: "amount must be a number", timestamp: Date.now()})
+  }
+
   const receiver = await userModel
     .findOne({
       accountnumber: body.account_number,

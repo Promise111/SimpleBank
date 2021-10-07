@@ -2,11 +2,11 @@ const { userModel } = require("../models/user");
 const nodemailer = require("nodemailer");
 
 exports.accountNumberGenerator = async () => {
-  const userCount = await (await userModel.find().count()).toString();
+  const userCount = await userModel.find().count();
   const rand = randomNumbers(2);
   const timeStamp = new Date().getTime().toString();
   const result =
-    userCount +
+    String(userCount) +
     rand +
     new Date().getSeconds().toString().substring(0, 1) +
     timeStamp;
