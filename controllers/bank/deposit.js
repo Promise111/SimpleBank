@@ -6,11 +6,12 @@ module.exports = async (req, res) => {
   const user = req.user;
   let balance;
   const { error } = validator(body);
+
   if (error) return res.status(400).json({ message: error.details[0].message });
   userAccount = await userModel
     .findOne({ email: user.email })
     .select("-password");
-  balance = userAccount.accountbalance += body.amount;
+  balance = userAccount.accountbalance += Number(body.amount);
   if (await userAccount.save())
     return res.status(200).json({ balance: balance, success: true });
 };

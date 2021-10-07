@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     timeStyle: "medium",
     dateStyle: "short",
   }).format(new Date());
-
+  
   try {
     // if (error) return res.status(400).send(error.details[0].message);
     const account = await userModel.findOne({

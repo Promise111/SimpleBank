@@ -13,18 +13,11 @@ module.exports = async (req, res) => {
     currency: "NGN",
     style: "currency",
   }).format(100);
+  req.body.amount = Number(body.amount);
 
   const userAccount = await userModel
     .findOne({ email: user.email })
     .select("-password");
-
-  if (error) {
-    return res.status(400).json({ success: false, message: error.details[0].message });
-  }
-
-  if (typeof body.amount != number) {
-    return res.status(400).json({success: false, message: "amount must be a number", timestamp: Date.now()})
-  }
 
   const receiver = await userModel
     .findOne({
@@ -32,18 +25,24 @@ module.exports = async (req, res) => {
     })
     .select(" -password");
 
-  if (userAccount.accountbalance < body.amount)
-    return res
-      .status(400)
-      .json({ success: false, message: "insufficient funds" });
-
-  if (body.account_number == user.accountnumber)
-    return res.status(403).json({
-      success: false,
-      message: "transfer to own account can not be initiated",
-    });
-
   try {
+    if (error) {
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
+    }
+
+    if (body.account_number == user.accountnumber)
+      return res.status(403).json({
+        success: false,
+        message: "transfer to own account can not be initiated",
+      });
+
+    if (userAccount.accountbalance < body.amount)
+      return res
+        .status(400)
+        .json({ success: false, message: "insufficient funds" });
+
     if (parseInt(body.amount) < 100)
       return res.status(400).json({
         success: false,
@@ -83,7 +82,7 @@ module.exports = async (req, res) => {
 
 const validator = (obj) => {
   const schema = Joi.object({
-    amount: Joi.number().required(),
+    amount: Joi.number().min(100).max(200000).required(),
     account_number: Joi.string().required(),
   });
   return schema.validate(obj);
