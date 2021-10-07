@@ -13,7 +13,9 @@ module.exports = async (req, res) => {
     .select("-password");
   balance = userAccount.accountbalance += Number(body.amount);
   if (await userAccount.save())
-    return res.status(200).json({ balance: balance, success: true });
+    return res
+      .status(200)
+      .json({ balance: balance, success: true, timestamp: Date.now() });
 };
 
 function validator(obj) {

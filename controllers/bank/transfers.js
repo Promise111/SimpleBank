@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
         amount: body.amount,
         balance: userAccount.accountbalance,
         receiver_name: `${receiver.firstname} ${receiver.lastname}`,
-        timestamp: new Date().getTime(),
+        timestamp: Date.now(),
       });
     }
   } catch (err) {
